@@ -11,10 +11,9 @@ class product extends Model
 
     protected $fillable = [
         'name',
-    'qty',
-    'price',
-    'description'
-    ];php artisan make:controller UserController
-    
+        'qyt',
+        'price',
+        'description'
+    ];
 
 }
