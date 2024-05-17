@@ -14,7 +14,7 @@ class ProductController extends Controller
         return view('products.create');
     }
     public function store(Request $request){
-        #validate data
+        #validate data------------------------
         $data = $request->validate([
             'name' => 'required',
             'qyt' => 'required|numeric',
@@ -22,11 +22,34 @@ class ProductController extends Controller
             'description' => 'required'
 
         ]);
-        #save data into database
+        #save data into database-------------------
         $newProduct = Product::create($data);
         return redirect(route('product.index'));
 
         #<-store data, dump 
         #dd($request->name);
+    }
+    #edit ------------------
+    public function edit(Product $product){
+        return view('products.edit',['product' => $product]);
+        #Dump 
+        #dd($product);
+
+    }
+    public function update(Product $product, Request $request){
+        $data = $request->validate([
+            'name' => 'required',
+            'qyt' => 'required|numeric',
+            'price' => 'required|decimal:0,2',
+            'description' => 'required'
+
+        ]);
+        $product->update($data);
+
+        return redirect(route('product.index'))->with('success','product updated successfully');
+    }
+    public function destroy(product $product){
+        $product->delete();
+        return redirect(route('product.index'))->with('success','product deleted successfully');
     }
 }
